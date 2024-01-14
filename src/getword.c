@@ -1,4 +1,5 @@
 #include "countwords.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,19 +12,17 @@ int getWord(FILE *input, char *buffer) {
   while ((c = getc(input)) != EOF) {
 
     if (length + 1 > MAX_WORD_LEN) {
-      fprintf(stderr, "Maximum word length exceeded!");
+      fprintf(stderr, "Maximum word length exceeded!\n%s\n", buffer);
       exit(EXIT_FAILURE);
     }
 
-    switch (c) {
-    case ' ':
-    case '\n':
-    case '\t':
+    if (ispunct(c) || c == ' ') {
       buffer[length] = '\0';
       return 1;
     }
 
-    buffer[length++] = c;
+	if (isalpha(c))
+		buffer[length++] = c;
   }
 
   buffer[length] = '\0';

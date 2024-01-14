@@ -27,7 +27,7 @@ Entry *scan(Entry *e, char *word) {
 void printEntries(Entry *entries) {
   Entry *head;
   for (head = entries; head != NULL; head = head->next)
-    printf("%-12s%3d\n", head->word, head->count);
+    printf("%-20s%3d\n", head->word, head->count);
 }
 
 /* Create a new entry */
