@@ -27,8 +27,11 @@ $(TARGET): $(OBJ)
 	$(CC) $^ -o $@
 
 # Object file rule
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c mkdir
 	$(CC) $(CFLAGS) -c $< -o $@
+
+mkdir:
+	if [ ! -d "obj" ]; then mkdir obj; fi
 
 # Clean rule
 clean:
