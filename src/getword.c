@@ -16,7 +16,7 @@ int getWord(FILE *input, char *buffer) {
       exit(EXIT_FAILURE);
     }
 
-    if (ispunct(c) || c == ' ') {
+    if (ispunct(c) || c == ' ' || c == '\n') {
       buffer[length] = '\0';
       return 1;
     }
