@@ -12,7 +12,7 @@ CFLAGS := -Wall \
 		 -g
 
 CFLAGS += -DMAIN
-#
+
 # List of all source files
 SRC := $(wildcard $(SRC_DIR)/*.c)
 

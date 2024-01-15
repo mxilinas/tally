@@ -17,7 +17,9 @@ int main(void) {
   Entry *entries = NULL;
   char word[MAX_WORD_LEN];
 
+  unsigned long count = 0;
   while (getWord(stdin, word) != EOF) {
+	  ++count;
 
     if (entries == NULL) {
       entries = createEntry(NULL, 1, word);
@@ -34,6 +36,7 @@ int main(void) {
   }
 
   printEntries(entries);
+  printf("%ld", count);
   freeEntries(entries);
 
   return 0;

@@ -14,7 +14,6 @@ Entry *concat(Entry *e0, Entry *e1) {
 
 /* Return a pointer to the entry with the given word */
 Entry *scan(Entry *e, char *word) {
-
   Entry *head;
   for (head = e; head != NULL; head = head->next)
 
