@@ -12,27 +12,23 @@ void printHashmap(FILE *, Entry *[]);
 void countWords(FILE *in, Entry *hashmap[]);
 
 static const char *usage = "Usage: %s <input_file> [-o output_file]\n";
-/* Write out the number of occurances of each word in input file. */
+
 int main(int argc, char *argv[]) {
 
-  FILE *input, *output;
+  FILE *input = stdin;
+  FILE *output;
   int opt;
-
-  if (argc < 2) {
-    fprintf(stderr, "%s: No input file specified.\n", argv[0]);
-    fprintf(stderr, usage, argv[0]);
-    exit(EXIT_FAILURE);
-  }
-
-  input = fopen(argv[1], "r");
-  if (input == NULL) {
-    fprintf(stderr, "%s: Could not read file %s\n", argv[0], argv[1]);
-    fprintf(stderr, usage, argv[0]);
-    exit(EXIT_FAILURE);
-  }
 
   while ((opt = (getopt(argc, argv, "o:"))) != -1) {
     switch (opt) {
+    case 'i':
+      input = fopen(optarg, "r");
+      if (input == NULL) {
+        fprintf(stderr, "%s: Could not read file %s\n", argv[0], argv[1]);
+        fprintf(stderr, usage, argv[0]);
+        exit(EXIT_FAILURE);
+      }
+      break;
     case 'o':
       output = fopen(optarg, "w");
       if (output == NULL) {
@@ -46,15 +42,26 @@ int main(int argc, char *argv[]) {
     }
   }
 
+  if (input == stdin) {
+	  printf("-------- Word Tally --------.\n");
+	  printf("No input file specified.\n");
+	  printf("Reading from stdin.\n");
+	  printf("Press ctrl-d to submit text.\n");
+	  printf("Press ctrl-c to quit.\n");
+	  printf("----------------------------.\n");
+	  printf("\n");
+  }
+
   Entry *hashmap[HASHMAP_SIZE] = {NULL};
   countWords(input, hashmap);
+  printf("\n");
   fclose(input);
 
   if (output == NULL)
-	  printHashmap(stdout, hashmap);
+    printHashmap(stdout, hashmap);
   else {
-	  printHashmap(output, hashmap);
-	  fclose(output);
+    printHashmap(output, hashmap);
+    fclose(output);
   }
 
   return 0;
