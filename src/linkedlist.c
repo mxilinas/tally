@@ -22,10 +22,10 @@ Entry *scan(Entry *e, char *word) {
 }
 
 /* Print a list of words and their number of occurances. */
-void printEntries(Entry *entries) {
+void printEntries(FILE *file, Entry *entries) {
   Entry *head;
   for (head = entries; head != NULL; head = head->next)
-    printf("%-20s%3d\n", head->word, head->count);
+    fprintf(file, "%-20s%3d\n", head->word, head->count);
 }
 
 /* Create a new entry */

@@ -1,41 +1,59 @@
 #include "countwords.h"
+#include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /* Function Prototypes */
-
-Entry *createEntry(Entry *, int, char *);
-Entry *concat(Entry *, Entry *);
 Entry *scan(Entry *, char *);
 void printEntries(Entry *);
 void freeEntries(Entry *);
-Entry *lookup(char *, Entry **);
-unsigned int hash(char *);
-void printHashmap(Entry *[]);
-int getWord(FILE *, char *);
+void printHashmap(FILE *, Entry *[]);
+void countWords(FILE *in, Entry *hashmap[]);
 
-/* Print the number of occurances of each word in stdin. */
-int main(void) {
+/* Write out the number of occurances of each word in input file. */
+int main(int argc, char *argv[]) {
 
-  Entry *entry;
-  Entry *hashmap[HASHMAP_SIZE] = {NULL};
-  char word[MAX_WORD_LEN];
+  FILE *input, *output;
+  int opt;
 
-  while (getWord(stdin, word) != EOF) {
-
-    if ((entry = lookup(word, hashmap))) {
-      ++(entry->count);
-      continue;
-    }
-
-    unsigned int hashCode = hash(word);
-    if ((entry = hashmap[hashCode]))
-      concat(entry, createEntry(NULL, 1, word));
-    else
-      hashmap[hashCode] = createEntry(NULL, 1, word);
+  if (argc < 2) {
+    fprintf(stderr, "%s: No input file specified.\n", argv[0]);
+    fprintf(stderr, "Usage: %s <input_file> [-o output_file]\n", argv[0]);
+    exit(EXIT_FAILURE);
   }
 
-  printHashmap(hashmap);
+  input = fopen(argv[1], "r");
+  if (input == NULL) {
+    fprintf(stderr, "%s: Could not read file %s\n", argv[0], argv[1]);
+    exit(EXIT_FAILURE);
+  }
+
+  while ((opt = (getopt(argc, argv, "o:"))) != -1) {
+    switch (opt) {
+    case 'o':
+      output = fopen(optarg, "w");
+      if (output == NULL) {
+        fprintf(stderr, "%s: Could not create file %s\n", argv[0], optarg);
+        exit(EXIT_FAILURE);
+      }
+      break;
+    case '?':
+      fprintf(stderr, "Usage: %s <input_file> [-o output_file]\n", argv[0]);
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  Entry *hashmap[HASHMAP_SIZE] = {NULL};
+  countWords(input, hashmap);
+  fclose(input);
+
+  if (output == NULL)
+	  printHashmap(stdout, hashmap);
+  else {
+	  printHashmap(output, hashmap);
+	  fclose(output);
+  }
 
   return 0;
 }

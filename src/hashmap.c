@@ -1,10 +1,11 @@
 #include "countwords.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef void *Hashmap;
 
 Entry *scan(Entry *, char *);
-void printEntries(Entry *entries);
+void printEntries(FILE *file, Entry *entries);
 
 /* Modulo hash function */
 unsigned int hash(char *key) {
@@ -26,9 +27,9 @@ Entry *lookup(char *word, Entry *hashmap[]) {
 }
 
 /* Print all the words and counts in the hashmap */
-void printHashmap(Entry *hashmap[]) {
+void printHashmap(FILE *file, Entry *hashmap[]) {
   int i;
   for (i = 0; i < HASHMAP_SIZE; ++i) {
-	  printEntries(&(*hashmap[i]));
+	  printEntries(file, &(*hashmap[i]));
   }
 }
