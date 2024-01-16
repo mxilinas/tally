@@ -1,7 +1,4 @@
-
-
 #include "countwords.h"
-#include "munit.h"
 #include <stdlib.h>
 
 typedef void *Hashmap;
@@ -19,7 +16,7 @@ unsigned int hash(char *key) {
   return hash % HASHMAP_SIZE;
 }
 
-/* Return a pointer to the entry with word or NULL */
+/* Return a pointer to the entry with the given word or NULL */
 Entry *lookup(char *word, Entry *hashmap[]) {
   Entry *e;
   if ((e = hashmap[hash(word)]) == NULL)

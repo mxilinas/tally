@@ -4,42 +4,38 @@
 
 /* Function Prototypes */
 
-int getWord(FILE *, char *);
-Entry *createEntry(Entry *next, int count, char *word);
+Entry *createEntry(Entry *, int, char *);
+Entry *concat(Entry *, Entry *);
 Entry *scan(Entry *, char *);
-Entry *concat(Entry *e0, Entry *e1);
-void printEntries(Entry *entries);
-void freeEntries(Entry *e);
-Entry *lookup(char *word, Entry **hashmap);
-unsigned int hash(char *key);
-void printHashmap(Entry *hashmap[]);
+void printEntries(Entry *);
+void freeEntries(Entry *);
+Entry *lookup(char *, Entry **);
+unsigned int hash(char *);
+void printHashmap(Entry *[]);
+int getWord(FILE *, char *);
 
-/* Print the number of occurances for each word in stdin. */
+/* Print the number of occurances of each word in stdin. */
 int main(void) {
 
-  /* Array of pointers to Entry */
+  Entry *entry;
   Entry *hashmap[HASHMAP_SIZE] = {NULL};
-
   char word[MAX_WORD_LEN];
 
-  unsigned long count = 0;
   while (getWord(stdin, word) != EOF) {
-    ++count;
 
-    Entry *e;
-    if ((e = lookup(word, hashmap)) != NULL)
-      ++(e->count);
-    else {
-      unsigned int hashCode = hash(word);
-	  if (hashmap[hashCode] == NULL)
-		  hashmap[hashCode] = createEntry(NULL, 1, word);
-	  else
-		 concat(hashmap[hashCode], createEntry(NULL, 1, word));
+    if ((entry = lookup(word, hashmap))) {
+      ++(entry->count);
+      continue;
     }
+
+    unsigned int hashCode = hash(word);
+    if ((entry = hashmap[hashCode]))
+      concat(entry, createEntry(NULL, 1, word));
+    else
+      hashmap[hashCode] = createEntry(NULL, 1, word);
   }
 
   printHashmap(hashmap);
-  printf("%ld", count);
 
   return 0;
 }

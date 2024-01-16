@@ -4,12 +4,12 @@
 #include <stdlib.h>
 
 /* Get the next word in a stream and write it to the buffer. */
-int getWord(FILE *input, char *buffer) {
+int getWord(FILE *stream, char *buffer) {
 
   int length = 0;
   int c;
 
-  while ((c = getc(input)) != EOF) {
+  while ((c = getc(stream)) != EOF) {
 
     if (length + 1 > MAX_WORD_LEN) {
       fprintf(stderr, "Maximum word length exceeded!\n%s\n", buffer);
