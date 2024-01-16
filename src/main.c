@@ -11,6 +11,7 @@ void freeEntries(Entry *);
 void printHashmap(FILE *, Entry *[]);
 void countWords(FILE *in, Entry *hashmap[]);
 
+static const char *usage = "Usage: %s <input_file> [-o output_file]\n";
 /* Write out the number of occurances of each word in input file. */
 int main(int argc, char *argv[]) {
 
@@ -19,13 +20,14 @@ int main(int argc, char *argv[]) {
 
   if (argc < 2) {
     fprintf(stderr, "%s: No input file specified.\n", argv[0]);
-    fprintf(stderr, "Usage: %s <input_file> [-o output_file]\n", argv[0]);
+    fprintf(stderr, usage, argv[0]);
     exit(EXIT_FAILURE);
   }
 
   input = fopen(argv[1], "r");
   if (input == NULL) {
     fprintf(stderr, "%s: Could not read file %s\n", argv[0], argv[1]);
+    fprintf(stderr, usage, argv[0]);
     exit(EXIT_FAILURE);
   }
 
@@ -39,7 +41,7 @@ int main(int argc, char *argv[]) {
       }
       break;
     case '?':
-      fprintf(stderr, "Usage: %s <input_file> [-o output_file]\n", argv[0]);
+      fprintf(stderr, usage, argv[0]);
       exit(EXIT_FAILURE);
     }
   }

@@ -20,7 +20,7 @@ SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Target executable
-TARGET := countwords
+TARGET := tally
 
 # Build rule
 $(TARGET): $(OBJ)
