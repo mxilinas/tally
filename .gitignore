@@ -1,4 +1,5 @@
 obj/*.o
 countwords
+/text
 *.cache
 compile_commands.json

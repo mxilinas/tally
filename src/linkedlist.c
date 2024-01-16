@@ -16,7 +16,6 @@ Entry *concat(Entry *e0, Entry *e1) {
 Entry *scan(Entry *e, char *word) {
   Entry *head;
   for (head = e; head != NULL; head = head->next)
-
     if (strcmp(word, head->word) == 0)
       return head;
   return NULL;
@@ -52,3 +51,4 @@ void freeEntries(Entry *e) {
     free(head);
   }
 }
+
