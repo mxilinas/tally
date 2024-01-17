@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     switch (opt) {
     case 'h':
       printUsage(stdout, argv[0]);
-      return 0; 
+      return 0;
     case 'i':
       input = fopen(optarg, "r");
       if (input == NULL) {
@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
 
   Entry *hashmap[HASHMAP_SIZE] = {NULL};
   countWords(input, hashmap);
+  printf("\n");
   fclose(input);
 
   if (output == NULL)
@@ -68,4 +69,3 @@ int main(int argc, char *argv[]) {
 void printUsage(FILE *out, char *programName) {
   fprintf(out, "Usage: %s <input_file> [-o output_file]\n", programName);
 }
-
