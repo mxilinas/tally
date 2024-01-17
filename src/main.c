@@ -5,13 +5,9 @@
 #include <unistd.h>
 
 /* Function Prototypes */
-Entry *scan(Entry *, char *);
-void printEntries(Entry *);
-void freeEntries(Entry *);
 void printHashmap(FILE *, Entry *[]);
 void countWords(FILE *in, Entry *hashmap[]);
-
-static const char *usage = "Usage: %s <input_file> [-o output_file]\n";
+void printUsage(FILE *out, char *programName);
 
 int main(int argc, char *argv[]) {
 
@@ -19,13 +15,15 @@ int main(int argc, char *argv[]) {
   FILE *output;
   int opt;
 
-  while ((opt = (getopt(argc, argv, "o:"))) != -1) {
+  while ((opt = (getopt(argc, argv, "hi:o:"))) != -1) {
     switch (opt) {
+    case 'h':
+      printUsage(stdout, argv[0]);
+      return 0; 
     case 'i':
       input = fopen(optarg, "r");
       if (input == NULL) {
-        fprintf(stderr, "%s: Could not read file %s\n", argv[0], argv[1]);
-        fprintf(stderr, usage, argv[0]);
+        fprintf(stderr, "%s: Could not read file %s\n", argv[0], optarg);
         exit(EXIT_FAILURE);
       }
       break;
@@ -37,7 +35,7 @@ int main(int argc, char *argv[]) {
       }
       break;
     case '?':
-      fprintf(stderr, usage, argv[0]);
+      printUsage(stderr, argv[0]);
       exit(EXIT_FAILURE);
     }
   }
@@ -55,7 +53,6 @@ int main(int argc, char *argv[]) {
 
   Entry *hashmap[HASHMAP_SIZE] = {NULL};
   countWords(input, hashmap);
-  printf("\n");
   fclose(input);
 
   if (output == NULL)
@@ -67,3 +64,8 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
+
+void printUsage(FILE *out, char *programName) {
+  fprintf(out, "Usage: %s <input_file> [-o output_file]\n", programName);
+}
+

@@ -1,11 +1,13 @@
 #include "countwords.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-typedef void *Hashmap;
-
-Entry *scan(Entry *, char *);
+/* Function Prototypes */
+Entry *scan(Entry *e, char *word);
 void printEntries(FILE *file, Entry *entries);
+Entry *concat(Entry *e0, Entry *e1);
+Entry *createEntry(Entry *next, int count, char *word);
 
 /* Modulo hash function */
 unsigned int hash(char *key) {
@@ -30,6 +32,20 @@ Entry *lookup(char *word, Entry *hashmap[]) {
 void printHashmap(FILE *file, Entry *hashmap[]) {
   int i;
   for (i = 0; i < HASHMAP_SIZE; ++i) {
-	  printEntries(file, &(*hashmap[i]));
+    printEntries(file, &(*hashmap[i]));
+  }
+}
+
+/* Add a new entry to the dictionary. */
+void addEntry(char *word, Entry *hashmap[]) {
+  Entry *entry;
+  unsigned int hashCode = hash(word);
+  if ((entry = lookup(word, hashmap))) {
+    ++(entry->count);
+  } else {
+    if ((entry = hashmap[hashCode]))
+      concat(entry, createEntry(NULL, 1, word));
+    else
+      hashmap[hashCode] = createEntry(NULL, 1, word);
   }
 }

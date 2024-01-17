@@ -51,4 +51,3 @@ void freeEntries(Entry *e) {
     free(head);
   }
 }
-
