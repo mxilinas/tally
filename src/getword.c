@@ -22,7 +22,7 @@ int getWord(FILE *stream, char *buffer) {
     }
 
 	if (isalpha(c))
-		buffer[length++] = c;
+		buffer[length++] = tolower(c);
   }
 
   buffer[length] = '\0';

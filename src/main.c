@@ -43,13 +43,14 @@ int main(int argc, char *argv[]) {
   }
 
   if (input == stdin) {
-	  printf("-------- Word Tally --------.\n");
-	  printf("No input file specified.\n");
-	  printf("Reading from stdin.\n");
-	  printf("Press ctrl-d to submit text.\n");
-	  printf("Press ctrl-c to quit.\n");
-	  printf("----------------------------.\n");
-	  printf("\n");
+    printf("\n");
+    printf("-------- Word Tally --------.\n");
+    printf("No input file specified.\n");
+    printf("Reading from stdin.\n");
+    printf("Press ctrl-d to submit text.\n");
+    printf("Press ctrl-c to quit.\n");
+    printf("----------------------------.\n");
+    printf("\n");
   }
 
   Entry *hashmap[HASHMAP_SIZE] = {NULL};
