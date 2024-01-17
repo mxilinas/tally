@@ -38,6 +38,8 @@ void printHashmap(FILE *file, Entry *hashmap[]) {
 
 /* Add a new entry to the dictionary. */
 void addEntry(char *word, Entry *hashmap[]) {
+  if (strcmp(word, "\0") == 0)
+    return;
   Entry *entry;
   unsigned int hashCode = hash(word);
   if ((entry = lookup(word, hashmap))) {
