@@ -1,4 +1,4 @@
-# Word Tally
+# Tally
 Display the frequency of words in a text stream.
 
 ## Introduction
@@ -7,8 +7,8 @@ This project is part of a larger series about exploring data structures in C.
 
 ## Quick Start
 
-	git clone https://github.com/mxilinas/word_tally
-	cd word_tally
+	git clone https://github.com/mxilinas/tally
+	cd tally
 	make
 	wget https://www.gutenberg.org/cache/epub/100/pg100.txt
 	./tally pg100.txt
