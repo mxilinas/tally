@@ -5,7 +5,7 @@ Display the frequency of words in a text stream.
 I made this program after reading "The C Programming Language" by Brian Kernighan.
 This project is part of a larger series about exploring data structures in C.
 
-Tally uses a hashmap to store the frequency of each word in a text stream.
+Tally uses a hashmap to store the frequency of each word.
 
 ## Quick Start
 
